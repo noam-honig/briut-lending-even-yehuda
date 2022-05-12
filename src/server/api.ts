@@ -11,5 +11,11 @@ const dataProvider = async () => {
 }
 export const api = remultExpress({
     entities: [Item, Lending],
-    dataProvider
+    dataProvider,
+    initApi: async remult => {
+
+      
+
+      
+    }
 });

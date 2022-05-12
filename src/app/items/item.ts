@@ -16,7 +16,10 @@ export class Item extends IdEntity {
     quantity = 0;
     @Fields.integer<Item>({ caption: 'זמין' }, (options, remult) => {
         options.serverExpression = async (item) =>
-            item.quantity - await remult.repo((await import("../lengdings/lending")).Lending).count({ item })
+            item.quantity - await remult.repo((await import("../lengdings/lending")).Lending).count({
+                item,
+                returnDate: null!
+            })
     })
     available = 0;
 

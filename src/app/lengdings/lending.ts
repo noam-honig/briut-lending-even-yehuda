@@ -45,7 +45,7 @@ export class Lending extends IdEntity {
     @Fields.boolean({ caption: 'מאשר/ת' })
     concent = false;
     @Fields.dateOnly({ allowNull: true, allowApiUpdate: Roles.admin })
-    returnDate: Date = null!;
+    returnDate: Date | null = null;
 
     @BackendMethod({ allowed: true })
     static async formSignIn(id: string, remult?: Remult) {

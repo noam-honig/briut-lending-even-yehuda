@@ -15,10 +15,23 @@ export class LendingsComponent implements OnInit {
   constructor(private remult: Remult, private route: ActivatedRoute) { }
   grid = new GridSettings(this.remult.repo(Lending), {
     allowUpdate: true,
-    rowButtons: [{
-      name: 'שלח קישור לטופס בווטסאפ',
-      click: l => l.sendWhatsappToPhone()
-    }]
+    numOfColumnsInGrid: 100,
+    rowCssClass: l => l.returnDate != null ? 'returned' : '',
+    rowButtons: [
+      {
+        name: 'שלח קישור לטופס בווטסאפ',
+        click: l => l.sendWhatsappToPhone()
+      },
+      {
+        name: 'עדכן החזרה',
+        click: async l => {
+          if (l.returnDate)
+            l.returnDate = null!;
+          else l.returnDate = new Date();
+          await l.save();
+        }
+      },
+    ]
   });
   ngOnInit(): void {
 
