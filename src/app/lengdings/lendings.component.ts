@@ -54,6 +54,13 @@ export const lendingRowButtons = (remult: Remult) => [
       l.sendWhatsapp('שלום ' + l.firstName);
     }
   },
+  {
+    name: 'חייג',
+    icon: 'phone',
+    click: async l => {
+      window.location.href = "tel:" + l.phone;
+    }
+  }
 ] as RowButton<Lending>[]
 
 export function showLendDialog(l: Lending, remult: Remult, ok?: VoidFunction) {
