@@ -24,6 +24,9 @@ import { DialogService } from './common/dialog';
 import { AdminGuard } from "./users/AdminGuard";
 import { ChangeLogComponent } from './change-log/change-log.component';
 import { CardInMiddleComponent } from './card-in-middle/card-in-middle.component';
+import { ItemsComponent } from './items/items.component';
+import { LendingsComponent } from './lengdings/lendings.component';
+import { LendingFormComponent } from './lending-form/lending-form.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,10 @@ import { CardInMiddleComponent } from './card-in-middle/card-in-middle.component
     YesNoQuestionComponent,
     InputAreaComponent,
     ChangeLogComponent,
-    CardInMiddleComponent
+    CardInMiddleComponent,
+    ItemsComponent,
+    LendingsComponent,
+    LendingFormComponent
   ],
   imports: [
     BrowserModule,

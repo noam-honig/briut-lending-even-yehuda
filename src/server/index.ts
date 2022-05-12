@@ -1,13 +1,12 @@
 import * as express from 'express';
-import { remultExpress } from 'remult/remult-express';
 import { config } from 'dotenv';
 import sslRedirect from 'heroku-ssl-redirect'
-import { createPostgresConnection } from 'remult/postgres';
 import * as swaggerUi from 'swagger-ui-express';
 import * as helmet from 'helmet';
 import * as jwt from 'express-jwt';
 import * as compression from 'compression';
 import { getJwtTokenSignKey } from '../app/users/user';
+import { api } from './api';
 
 
 async function startup() {
@@ -21,15 +20,6 @@ async function startup() {
             contentSecurityPolicy: false,
         })
     );
-    const dataProvider = async () => {
-        if (process.env['NODE_ENV'] === "production")
-            return createPostgresConnection({ configuration: "heroku" })
-        return undefined;
-    }
-    let api = remultExpress({
-        entities: [],
-        dataProvider
-    });
     app.use(api);
     app.use('/api/docs', swaggerUi.serve,
         swaggerUi.setup(api.openApiDoc({ title: 'remult-react-todo' })));

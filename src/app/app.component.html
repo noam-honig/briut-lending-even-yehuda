@@ -11,8 +11,8 @@
     <ng-container *ngIf="remult.authenticated()">
       <button mat-flat-button color="primary" [matMenuTriggerFor]="menu">{{remult.user.name}}</button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="updateInfo()">{{terms.updateInfo}}</button>
-        <button mat-menu-item (click)="changePassword()">{{terms.changePassword}}</button>
+        <button mat-menu-item (click)="updateInfo()" *ngIf="isAdmin()">{{terms.updateInfo}}</button>
+        <button mat-menu-item (click)="changePassword()" *ngIf="isAdmin()">{{terms.changePassword}}</button>
         <button mat-menu-item (click)="signOut()">{{terms.signOut}}</button>
       </mat-menu>
     </ng-container>

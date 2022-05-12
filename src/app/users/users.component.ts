@@ -29,10 +29,7 @@ export class UsersComponent implements OnInit {
     rowsInPage: 100,
 
     columnSettings: users => [
-      users.name,
-      users.admin
-
-
+      users.name
     ],
     rowButtons: [{
       name: 'Reset Password',

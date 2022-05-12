@@ -1,0 +1,19 @@
+<div style="    display: flex;
+flex-direction: column;
+text-align: center;
+padding:8px">
+    <img src="../assets/logo.jpg" style="max-height:100px;object-fit:contain">
+    <h2>השאלת {{lending?.item?.name}}</h2>
+
+    <data-area [settings]="area" *ngIf="area"></data-area>
+    <h2>הסכמה:</h2>
+    <p style="text-align: start;">
+        הנני מתחייב/ת להשיב את הציוד הנ"ל בתום תקופת ההשאלה (חודשיים מתאריך ההשאלה) כשהוא תקין ובמצב סביר. כמו"כ
+        הובהר
+        לי תוכנית השאלה זו נועדה לרווחת תושבי אבן יהודה והסביבה, ללא אחריות לכל נזק הנגרם כתוצאה משימוש בפריטים אלו.
+        ידוע לי גם שבמידת הצורך יש להיוועץ בצוות הרפואי המטפל לפני השימוש.
+    </p>
+    <div>
+        <button mat-raised-button color="primary" (click)="confirm()"> מאשר/ת</button>
+    </div>
+</div>

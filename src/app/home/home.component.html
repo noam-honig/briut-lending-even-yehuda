@@ -1,3 +1,10 @@
-<app-card-in-middle>
-
-</app-card-in-middle>
+<div style="font-size:large">פריטים אפשריים</div>
+<mat-card *ngFor="let item of items" style="margin:8px 0; padding:8px">
+  <div style="display: flex;
+  justify-content: space-between;
+  align-items: center;" (click)="lend(item)">
+    <span style="font-size:large">{{item.name}} ({{item.available}})</span> <button mat-icon-button>
+      <mat-icon>edit</mat-icon>
+    </button>
+  </div>
+</mat-card>

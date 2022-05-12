@@ -10,6 +10,7 @@ import { InputAreaComponent } from './common/input-area/input-area.component';
 import { AuthService } from './auth.service';
 import { terms } from './terms';
 import { InputField } from '@remult/angular/interfaces';
+import { Roles } from './users/roles';
 
 @Component({
   selector: 'app-root',
@@ -49,33 +50,15 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
 
   }
+  isAdmin() {
+    return this.remult.isAllowed(Roles.admin);
+  }
 
   signOut() {
     this.auth.signOut();
     this.router.navigate(['/']);
   }
-  signUp() {
-    let user = this.remult.repo(User).create();
-    let password = new PasswordControl();
-    let confirmPassword = new PasswordControl(terms.confirmPassword);
-    openDialog(InputAreaComponent, i => i.args = {
-      title: terms.signUp,
-      fields: () => [
-        user.$.name,
-        password,
-        confirmPassword
-      ],
-      ok: async () => {
-        if (password.value != confirmPassword.value) {
-          confirmPassword.error = terms.doesNotMatchPassword;
-          throw new Error(confirmPassword.metadata.caption + " " + confirmPassword.error);
-        }
-        await user.create(password.value);
-        this.auth.signIn(user.name, password.value);
-
-      }
-    });
-  }
+ 
 
   async updateInfo() {
     let user = await this.remult.repo(User).findId(this.remult.user.id);

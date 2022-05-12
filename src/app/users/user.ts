@@ -1,4 +1,4 @@
-import { IdEntity, BackendMethod, Entity,  Validators, isBackend, Allow, Fields } from "remult";
+import { IdEntity, BackendMethod, Entity, Validators, isBackend, Allow, Fields } from "remult";
 import { Remult, } from 'remult';
 import { Roles } from './roles';
 import { terms } from "../terms";
@@ -52,14 +52,8 @@ export class User extends IdEntity {
     async passwordMatches(password: string) {
         return !this.password || (await import('password-hash')).verify(password, this.password);
     }
-    @BackendMethod({ allowed: true })
-    async create(password: string) {
-        if (!this._.isNew())
-            throw new Error(terms.invalidOperation);
-        await this.hashAndSetPassword(password);
-        await this._.save();
-    }
-    @BackendMethod({ allowed: Allow.authenticated })
+
+    @BackendMethod({ allowed: Roles.admin })
     async updatePassword(password: string) {
         if (this._.isNew() || this.id != this.remult.user.id)
             throw new Error(terms.invalidOperation);
@@ -70,23 +64,39 @@ export class User extends IdEntity {
     static async signIn(user: string, password: string, remult?: Remult) {
         let result: UserInfo;
         let u = await remult!.repo(User).findFirst({ name: user });
-        if (u)
+        if (!u) {
+            if (await remult!.repo(User).count() === 0) {
+                u = remult!.repo(User).create({
+                    name: user,
+                    admin: true
+                })
+                await u.save();
+            }
+        }
+        if (u) {
+            if (!u.password) {
+                u.hashAndSetPassword(password);
+                await u.save();
+            }
             if (await u.passwordMatches(password)) {
                 result = {
                     id: u.id,
-                    roles: [],
+                    roles: [Roles.admin],
                     name: u.name
                 };
                 if (u.admin) {
                     result.roles.push(Roles.admin);
                 }
             }
+        }
+
 
         if (result!) {
             return (jwt.sign(result, getJwtTokenSignKey()));
         }
         throw new Error(terms.invalidSignIn);
     }
+
 }
 
 export function getJwtTokenSignKey() {

@@ -1,0 +1,98 @@
+[
+  {
+    "id": "d450b614-5fee-41a0-beb2-20863035408d",
+    "name": "זוג קבים אוקסילריות - גדול",
+    "deposit": 50,
+    "quantity": 3
+  },
+  {
+    "id": "6c956f28-566c-44aa-8129-9765367d6f85",
+    "name": "זוג קבים קנדיות לילד",
+    "deposit": 50,
+    "quantity": 3
+  },
+  {
+    "id": "5590ecb1-cdc1-48c5-8867-90d2ca51aaa9",
+    "name": "זוג קבים קנדיות למבוגר",
+    "deposit": 50,
+    "quantity": 8
+  },
+  {
+    "id": "f8b24f16-e70e-42f0-87c6-332ec9062fbb",
+    "name": "הליכון מתקפל ללא גלגלים",
+    "deposit": 70,
+    "quantity": 10
+  },
+  {
+    "id": "477916ed-cef5-4ba8-9cb9-9df33c1439e0",
+    "name": "כסא גלגלים",
+    "deposit": 150,
+    "quantity": 4
+  },
+  {
+    "id": "3369d148-6e50-4c7a-a284-12d0f9642265",
+    "name": "הליכון טלקסופי מתקפל",
+    "deposit": 50,
+    "quantity": 0
+  },
+  {
+    "id": "b7eed7fc-37f6-4b91-bf68-c6b312f41ca4",
+    "name": "נעל דרקו",
+    "deposit": 0,
+    "quantity": 3
+  },
+  {
+    "id": "344d63b4-8957-4c5d-88a3-b94312cede79",
+    "name": "טריפוד צר/רחב",
+    "deposit": 0,
+    "quantity": 0
+  },
+  {
+    "id": "c2957aea-feec-4d0e-963c-4cf501945204",
+    "name": "מקבע קרסול",
+    "deposit": 0,
+    "quantity": 0
+  },
+  {
+    "id": "22741990-9e96-4e67-9441-3cac562c0269",
+    "name": "מכשיר אדים קרים",
+    "deposit": 0,
+    "quantity": 0
+  },
+  {
+    "id": "f0882365-c28b-4c75-860a-eadb735ba7f9",
+    "name": "IWalk 2.0",
+    "deposit": 0,
+    "quantity": 0
+  },
+  {
+    "id": "3eaa1908-8dd9-47f4-81f5-1485bb9c7202",
+    "name": "כסא רחצה",
+    "deposit": 75,
+    "quantity": 2
+  },
+  {
+    "id": "646441d1-4b99-4d83-a636-5cb5c277b9c5",
+    "name": "זוג קבים אוקסילריות -בינוני",
+    "deposit": 50,
+    "quantity": 3
+  },
+  {
+    "id": "b0b77060-7471-4d64-9f43-e4ec322cca91",
+    "name": "זוג קבים אוקסילריות -קטן",
+    "deposit": 50,
+    "quantity": 3
+  },
+  {
+    "id": "c6bd08ea-05da-4136-ab95-3b3cb31e108a",
+    "name": "תומך ברך",
+    "deposit": 0,
+    "quantity": 1
+  },
+  {
+    "id": "5d523efa-f935-4ebc-8929-1cdf2a898324",
+    "name": "מגפון",
+    "deposit": 0,
+    "quantity": 3
+  }
+]
