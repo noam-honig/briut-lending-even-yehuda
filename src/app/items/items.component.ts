@@ -11,7 +11,7 @@ import { Item } from './item';
 export class ItemsComponent implements OnInit {
 
   constructor(private remult: Remult) { }
-  grid = new GridSettings(this.remult.repo(Item), { allowCrud: true });
+  grid = new GridSettings(this.remult.repo(Item), { allowCrud: true, knowTotalRows: true });
   ngOnInit(): void {
   }
 

@@ -17,6 +17,7 @@ export class LendingsComponent implements OnInit {
   constructor(private remult: Remult, private route: ActivatedRoute) { }
   grid = new GridSettings(this.remult.repo(Lending), {
     allowUpdate: true,
+    knowTotalRows: true,
     numOfColumnsInGrid: 100,
     rowCssClass: l => l.returnDate != null ? 'returned' : '',
     rowButtons: lendingRowButtons(this.remult)
