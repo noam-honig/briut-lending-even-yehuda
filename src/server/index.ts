@@ -1,5 +1,6 @@
-import * as express from 'express';
 import { config } from 'dotenv';
+config(); //loads the configuration from the .env file
+import * as express from 'express';
 import sslRedirect from 'heroku-ssl-redirect'
 import * as swaggerUi from 'swagger-ui-express';
 import * as helmet from 'helmet';
@@ -10,7 +11,6 @@ import { api } from './api';
 
 
 async function startup() {
-    config(); //loads the configuration from the .env file
     const app = express();
     app.use(sslRedirect());
     app.use(jwt({ secret: getJwtTokenSignKey(), credentialsRequired: false, algorithms: ['HS256'] }));

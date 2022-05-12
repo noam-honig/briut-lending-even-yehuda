@@ -17,6 +17,7 @@ export class Item extends IdEntity {
     @DataControl({ width: '50' })
     @Fields.integer({ caption: 'פקדון' })
     deposit = 0;
+    @DataControl({ readonly: true })
     @Fields.integer<Item>({ caption: 'זמין' }, (options, remult) => {
         options.serverExpression = async (item) =>
             item.quantity - await remult.repo((await import("../lengdings/lending")).Lending).count({

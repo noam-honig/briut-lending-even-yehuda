@@ -4,18 +4,15 @@ import { Item } from '../app/items/item';
 import { Lending } from '../app/lengdings/lending';
 
 
+
 const dataProvider = async () => {
-    if (process.env['NODE_ENV'] === "production")
-        return createPostgresConnection({ configuration: "heroku" })
+    //  if (process.env['NODE_ENV'] === "production")
+    return createPostgresConnection({ configuration: "heroku", sslInDev: true })
     return undefined;
 }
 export const api = remultExpress({
     entities: [Item, Lending],
     dataProvider,
     initApi: async remult => {
-
-      
-
-      
     }
 });
