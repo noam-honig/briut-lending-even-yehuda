@@ -29,7 +29,10 @@ export class HomeComponent implements OnInit {
     if (!this.isAdmin())
       return;
     const l = this.remult.repo(Lending).create({ item });
-    showLendDialog(l, this.remult, () => item._.reload());
+    showLendDialog(l, this.remult, () => {
+      l.sendFormInWhatsapp();
+      item._.reload();
+    });
   };
 }
 
