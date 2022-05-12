@@ -3,7 +3,8 @@
   <div style="display: flex;
   justify-content: space-between;
   align-items: center;" (click)="lend(item)">
-    <span style="font-size:large">{{item.name}} ({{item.available}})</span> <button mat-icon-button>
+    <span style="font-size:large">{{item.name}} ({{item.available}})</span>
+    <button mat-icon-button *ngIf="isAdmin()">
       <mat-icon>edit</mat-icon>
     </button>
   </div>

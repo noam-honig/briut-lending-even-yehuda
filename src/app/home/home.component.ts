@@ -6,6 +6,8 @@ import { DialogService } from '../common/dialog';
 import { InputAreaComponent } from '../common/input-area/input-area.component';
 import { Item } from '../items/item';
 import { isValidPhone, Lending } from '../lengdings/lending';
+import { showLendDialog } from '../lengdings/lendings.component';
+import { Roles } from '../users/roles';
 
 @Component({
   selector: 'app-home',
@@ -16,45 +18,22 @@ export class HomeComponent implements OnInit {
   constructor(private remult: Remult) {
 
   }
+  isAdmin() {
+    return this.remult.isAllowed(Roles.admin);
+  }
   items: Item[] = [];
   async ngOnInit() {
     this.items = await this.remult.repo(Item).find({ where: { quantity: { ">": 0 } } })
   }
   lend(item: Item) {
+    if (!this.isAdmin())
+      return;
     const l = this.remult.repo(Lending).create({ item });
-    setReturnDateBasedOnDate();
-    openDialog(InputAreaComponent, x => x.args = {
-      title: "השאלת " + item.name,
-      fields: () => [{
-        field: l.$.phone,
-        valueChange: () => {
-          if (isValidPhone(l.phone)) {
-            this.remult.repo(Lending).findFirst({ phone: l.phone }).then(prev => {
-              if (prev) {
-                l.lastName = prev.lastName;
-                l.firstName = prev.firstName;
-                l.address = prev.address;
-              }
-            });
+    showLendDialog(l, this.remult, () => item._.reload());
 
-          }
-        }
-      }, l.$.firstName, l.$.lastName, {
-        field: l.$.lendDate, valueChange: () => {
-          setReturnDateBasedOnDate();
-        }
-      }, l.$.plannedReturnDate, l.$.deposit, l.$.depositType, l.$.address],
-      ok: async () => {
-        await l.save();
-        item._.reload();
-      }
-    });
 
-    function setReturnDateBasedOnDate() {
-      let x = new Date(l.lendDate);
-      x.setMonth(x.getMonth() + 2);
-      l.plannedReturnDate = x;
-    }
+
+
   };
 }
 

@@ -1,9 +1,9 @@
-import { Allow, BackendMethod, Entity, Field, Fields, IdEntity, Remult } from "remult";
+import { Allow, BackendMethod, Entity, Field, Fields, getValueList, IdEntity, Remult } from "remult";
 import { Item } from "../items/item";
 import { Roles } from "../users/roles";
 import * as jwt from 'jsonwebtoken';
 import { getJwtTokenSignKey } from "../users/user";
-import { DataControl } from "@remult/angular/interfaces";
+import { DataControl, getEntityValueList } from "@remult/angular/interfaces";
 
 @Entity<Lending>("lendings", {
     allowApiCrud: Allow.authenticated,
@@ -42,7 +42,7 @@ export class Lending extends IdEntity {
     lendDate = new Date();
 
     @Field(() => Item, { allowApiUpdate: Roles.admin, displayValue: (_, l) => l.name })
-    @DataControl({ readonly: true })
+    @DataControl({ readonly: true, valueList: async (r: Remult) => getEntityValueList(r.repo(Item)) })
     item!: Item;
 
 
@@ -57,7 +57,7 @@ export class Lending extends IdEntity {
     depositType = '';
     @Fields.boolean({ caption: 'מאשר/ת' })
     concent = false;
-    @Fields.dateOnly({ allowNull: true, allowApiUpdate: Roles.admin })
+    @Fields.dateOnly({ allowNull: true, allowApiUpdate: Roles.admin,caption:'תאריך החזרה בפועל' })
     returnDate: Date | null = null;
 
     @BackendMethod({ allowed: true })
@@ -73,13 +73,13 @@ export class Lending extends IdEntity {
         }, getJwtTokenSignKey()));
     }
     sendFormInWhatsapp() {
-        let message = 
-`שלום ${this.firstName}, 
+        let message =
+            `שלום ${this.firstName}, 
 בהקשר להשאלה של ${this.item.name} 
 
 אנא מלא/י את הטופס בקישור הבא:
-${window.location.origin + '/form/' + this.item.id}`;
-this.sendWhatsapp(message);
+${window.location.origin + '/form/' + this.id}`;
+        this.sendWhatsapp(message);
     }
 
     sendWhatsapp(message: string) {

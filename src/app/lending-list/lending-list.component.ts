@@ -11,9 +11,10 @@ import { lendingRowButtons } from '../lengdings/lendings.component';
 })
 export class LendingListComponent implements OnInit {
 
-  buttons: RowButton<Lending>[] = lendingRowButtons;
+
   constructor(private remult: Remult) { }
   lendings: Lending[] = [];
+  buttons: RowButton<Lending>[] = lendingRowButtons(this.remult);
   async ngOnInit() {
     this.lendings = await this.remult.repo(Lending).find();
   }

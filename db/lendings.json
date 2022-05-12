@@ -6,11 +6,11 @@
     "phone": "0507330590",
     "firstName": "נועם",
     "lastName": "הניג",
-    "address": "שנהב 4 אבן יהודה 456",
+    "address": "שנהב 4 אבן יהודה 4567",
     "plannedReturnDate": "2022-07-12",
     "deposit": 50,
     "depositType": "ביט",
     "concent": true,
-    "returnDate": "2022-05-12"
+    "returnDate": null
   }
 ]

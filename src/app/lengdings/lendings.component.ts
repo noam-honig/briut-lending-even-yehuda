@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { openDialog } from '@remult/angular';
 import { GridSettings, RowButton } from '@remult/angular/interfaces';
 import { Remult } from 'remult';
+import { InputAreaComponent } from '../common/input-area/input-area.component';
 import { Roles } from '../users/roles';
-import { Lending } from './lending';
+import { isValidPhone, Lending } from './lending';
 
 @Component({
   selector: 'app-lendings',
@@ -17,7 +19,7 @@ export class LendingsComponent implements OnInit {
     allowUpdate: true,
     numOfColumnsInGrid: 100,
     rowCssClass: l => l.returnDate != null ? 'returned' : '',
-    rowButtons: lendingRowButtons
+    rowButtons: lendingRowButtons(this.remult)
   });
   ngOnInit(): void {
 
@@ -25,7 +27,13 @@ export class LendingsComponent implements OnInit {
 
 }
 
-export const lendingRowButtons: RowButton<Lending>[] = [
+export const lendingRowButtons = (remult: Remult) => [
+  {
+    name: 'ערוך',
+    icon: 'edit',
+    click: l => showLendDialog(l, remult)
+  }
+  ,
   {
     name: 'שלח קישור לטופס בווטסאפ',
     click: l => l.sendFormInWhatsapp()
@@ -45,4 +53,45 @@ export const lendingRowButtons: RowButton<Lending>[] = [
       l.sendWhatsapp('שלום ' + l.firstName);
     }
   },
-]
+] as RowButton<Lending>[]
+
+export function showLendDialog(l: Lending, remult: Remult, ok?: VoidFunction) {
+  function setReturnDateBasedOnDate() {
+    let x = new Date(l.lendDate);
+    x.setMonth(x.getMonth() + 2);
+    l.plannedReturnDate = x;
+  }
+  if (l._.isNew())
+    setReturnDateBasedOnDate();
+  openDialog(InputAreaComponent, x => x.args = {
+    title: "השאלת " + l.item.name,
+    fields: () => [{
+      field: l.$.phone,
+      valueChange: () => {
+        if (isValidPhone(l.phone)) {
+          remult.repo(Lending).findFirst({ phone: l.phone }).then(prev => {
+            if (prev) {
+              l.lastName = prev.lastName;
+              l.firstName = prev.firstName;
+              l.address = prev.address;
+            }
+          });
+
+        }
+      }
+    }, l.$.firstName, l.$.lastName, {
+      field: l.$.lendDate, valueChange: () => {
+        setReturnDateBasedOnDate();
+      }
+    }, l.$.plannedReturnDate, {
+      field: l.$.returnDate, visible: () =>
+        !l.isNew()
+    }, l.$.deposit, l.$.depositType, l.$.address],
+    ok: async () => {
+      await l.save();
+      if (ok)
+        ok();
+    }
+  });
+
+}
