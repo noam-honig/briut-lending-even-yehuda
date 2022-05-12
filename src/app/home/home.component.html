@@ -4,8 +4,8 @@
   justify-content: space-between;
   align-items: center;" (click)="lend(item)">
     <span style="font-size:large">{{item.name}} ({{item.available}})</span>
-    <button mat-icon-button *ngIf="isAdmin()">
-      <mat-icon>edit</mat-icon>
+    <button mat-icon-button *ngIf="isAdmin()" (click)="history(item);$event.stopPropagation()">
+      <mat-icon>list</mat-icon>
     </button>
   </div>
 </mat-card>

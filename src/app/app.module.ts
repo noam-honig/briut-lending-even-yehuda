@@ -29,6 +29,7 @@ import { LendingsComponent } from './lengdings/lendings.component';
 import { LendingFormComponent } from './lending-form/lending-form.component';
 import { LendingListComponent } from './lending-list/lending-list.component';
 import { DotsMenuComponent } from './dots-menu/dots-menu.component';
+import { ItemLendingComponent } from './item-lending/item-lending.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { DotsMenuComponent } from './dots-menu/dots-menu.component';
     LendingsComponent,
     LendingFormComponent,
     LendingListComponent,
-    DotsMenuComponent
+    DotsMenuComponent,
+    ItemLendingComponent
   ],
   imports: [
     BrowserModule,

@@ -1,12 +1,13 @@
-<mat-card *ngFor="let item of lendings" style="margin:8px 0; padding:8px" [class.returned]="item.returnDate!=null">
+<mat-card *ngFor="let lend of lendings" style="margin:8px 0; padding:8px" [class.returned]="lend.returnDate!=null">
     <div style="display: flex;
   justify-content: space-between;
   align-items: center;">
-        <span style="font-size:large">{{item.firstName}} ({{item.lastName}}), {{item.item.name}}</span>
-        <app-dots-menu [item]="item" [buttons]="buttons"></app-dots-menu>
+        <span style="font-size:large">{{lend.firstName}} ({{lend.lastName}})<span *ngIf="!item">,
+                {{lend.item.name}}</span></span>
+        <app-dots-menu [item]="lend" [buttons]="buttons"></app-dots-menu>
     </div>
-    <div> הושאל בתאריך: {{item.$.lendDate.displayValue}}, 
-        <span *ngIf="item.returnDate"> הוחזר בתאריך: {{item.$.returnDate.displayValue}}</span>
-        <span *ngIf="!item.returnDate"> תאריך החזרה מתוכנן: {{item.$.plannedReturnDate.displayValue}}</span>
+    <div> הושאל בתאריך: {{lend.$.lendDate.displayValue}},
+        <span *ngIf="lend.returnDate"> הוחזר בתאריך: {{lend.$.returnDate.displayValue}}</span>
+        <span *ngIf="!lend.returnDate"> תאריך החזרה מתוכנן: {{lend.$.plannedReturnDate.displayValue}}</span>
     </div>
 </mat-card>
