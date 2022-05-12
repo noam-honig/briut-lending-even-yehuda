@@ -27,6 +27,8 @@ import { CardInMiddleComponent } from './card-in-middle/card-in-middle.component
 import { ItemsComponent } from './items/items.component';
 import { LendingsComponent } from './lengdings/lendings.component';
 import { LendingFormComponent } from './lending-form/lending-form.component';
+import { LendingListComponent } from './lending-list/lending-list.component';
+import { DotsMenuComponent } from './dots-menu/dots-menu.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { LendingFormComponent } from './lending-form/lending-form.component';
     CardInMiddleComponent,
     ItemsComponent,
     LendingsComponent,
-    LendingFormComponent
+    LendingFormComponent,
+    LendingListComponent,
+    DotsMenuComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { GridSettings } from '@remult/angular/interfaces';
+import { GridSettings, RowButton } from '@remult/angular/interfaces';
 import { Remult } from 'remult';
 import { Roles } from '../users/roles';
 import { Lending } from './lending';
@@ -17,24 +17,32 @@ export class LendingsComponent implements OnInit {
     allowUpdate: true,
     numOfColumnsInGrid: 100,
     rowCssClass: l => l.returnDate != null ? 'returned' : '',
-    rowButtons: [
-      {
-        name: 'שלח קישור לטופס בווטסאפ',
-        click: l => l.sendWhatsappToPhone()
-      },
-      {
-        name: 'עדכן החזרה',
-        click: async l => {
-          if (l.returnDate)
-            l.returnDate = null!;
-          else l.returnDate = new Date();
-          await l.save();
-        }
-      },
-    ]
+    rowButtons: lendingRowButtons
   });
   ngOnInit(): void {
 
   }
 
 }
+
+export const lendingRowButtons: RowButton<Lending>[] = [
+  {
+    name: 'שלח קישור לטופס בווטסאפ',
+    click: l => l.sendFormInWhatsapp()
+  },
+  {
+    name: 'עדכן החזרה',
+    click: async l => {
+      if (l.returnDate)
+        l.returnDate = null!;
+      else l.returnDate = new Date();
+      await l.save();
+    }
+  },
+  {
+    name: 'פתח ווטסאפ',
+    click: async l => {
+      l.sendWhatsapp('שלום ' + l.firstName);
+    }
+  },
+]

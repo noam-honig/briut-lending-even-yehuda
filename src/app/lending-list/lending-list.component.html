@@ -1,0 +1,12 @@
+<mat-card *ngFor="let item of lendings" style="margin:8px 0; padding:8px" [class.returned]="item.returnDate!=null">
+    <div style="display: flex;
+  justify-content: space-between;
+  align-items: center;">
+        <span style="font-size:large">{{item.firstName}} ({{item.lastName}}), {{item.item.name}}</span>
+        <app-dots-menu [item]="item" [buttons]="buttons"></app-dots-menu>
+    </div>
+    <div> הושאל בתאריך: {{item.$.lendDate.displayValue}}, 
+        <span *ngIf="item.returnDate"> הוחזר בתאריך: {{item.$.returnDate.displayValue}}</span>
+        <span *ngIf="!item.returnDate"> תאריך החזרה מתוכנן: {{item.$.plannedReturnDate.displayValue}}</span>
+    </div>
+</mat-card>

@@ -7,19 +7,25 @@ import { DataControl } from "@remult/angular/interfaces";
 
 @Entity<Lending>("lendings", {
     allowApiCrud: Allow.authenticated,
+
     defaultOrderBy: { lendDate: "desc" }
 }, (options, remult) => {
     if (!remult.isAllowed(Roles.admin)) {
         options.apiPrefilter = { id: remult.user.id }
+        options.allowApiUpdate = (remult, lend) => lend!.returnDate == null
     }
 }
 )
 export class Lending extends IdEntity {
-    @Field(() => Item, { allowApiUpdate: Roles.admin, displayValue: (_, l) => l.name })
-    @DataControl({ readonly: true })
-    item!: Item;
-    @Fields.dateOnly({ caption: 'תאריך השאלה', allowApiUpdate: Roles.admin })
-    lendDate = new Date();
+
+
+    @DataControl({ width: '100' })
+    @Fields.string({ caption: 'שם פרטי' })
+    firstName = '';
+    @DataControl({ width: '100' })
+    @Fields.string({ caption: 'שם משפחה' })
+    lastName = '';
+    @DataControl({ width: '100' })
     @Fields.string({
         caption: 'טלפון',
         allowApiUpdate: Roles.admin,
@@ -30,10 +36,17 @@ export class Lending extends IdEntity {
         }
     })
     phone = '';
-    @Fields.string({ caption: 'שם פרטי' })
-    firstName = '';
-    @Fields.string({ caption: 'שם משפחה' })
-    lastName = '';
+
+    @DataControl({ width: '100' })
+    @Fields.dateOnly({ caption: 'תאריך השאלה', allowApiUpdate: Roles.admin })
+    lendDate = new Date();
+
+    @Field(() => Item, { allowApiUpdate: Roles.admin, displayValue: (_, l) => l.name })
+    @DataControl({ readonly: true })
+    item!: Item;
+
+
+
     @Fields.string({ caption: 'כתובת' })
     address = '';
     @Fields.dateOnly({ caption: 'תאריך החזרה משוער' })
@@ -59,13 +72,18 @@ export class Lending extends IdEntity {
             roles: [Roles.lender]
         }, getJwtTokenSignKey()));
     }
-    sendWhatsappToPhone() {
-        let phone = this.phone;
-        window.open('https://wa.me/' + phone + '?text=' + encodeURI(
-            `שלום ${this.firstName}, 
-אנא מלא/י את הטופס בקישור הבא בהקשר להשאלה של ${this.item.name}:
-${window.location.origin + '/form/' + this.item.id}`
-        ), '_blank');
+    sendFormInWhatsapp() {
+        let message = 
+`שלום ${this.firstName}, 
+בהקשר להשאלה של ${this.item.name} 
+
+אנא מלא/י את הטופס בקישור הבא:
+${window.location.origin + '/form/' + this.item.id}`;
+this.sendWhatsapp(message);
+    }
+
+    sendWhatsapp(message: string) {
+        window.open('https://wa.me/' + this.phone + '?text=' + encodeURI(message), '_blank');
     }
 }
 
