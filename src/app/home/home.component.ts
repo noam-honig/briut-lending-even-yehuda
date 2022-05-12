@@ -30,10 +30,6 @@ export class HomeComponent implements OnInit {
       return;
     const l = this.remult.repo(Lending).create({ item });
     showLendDialog(l, this.remult, () => item._.reload());
-
-
-
-
   };
 }
 
