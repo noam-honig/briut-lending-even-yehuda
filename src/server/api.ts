@@ -6,8 +6,8 @@ import { Lending } from '../app/lengdings/lending';
 
 
 const dataProvider = async () => {
-    //  if (process.env['NODE_ENV'] === "production")
-    return createPostgresConnection({ configuration: "heroku", sslInDev: true })
+    if (process.env['NODE_ENV'] === "production")
+        return createPostgresConnection({ configuration: "heroku" })
     return undefined;
 }
 export const api = remultExpress({

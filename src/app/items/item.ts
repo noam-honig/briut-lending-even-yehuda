@@ -30,7 +30,5 @@ export class Item extends IdEntity {
 }
 
 /*
-
 [] check if same item is loaned to same person and notify
-[] block update of returned item for normal people
 */
