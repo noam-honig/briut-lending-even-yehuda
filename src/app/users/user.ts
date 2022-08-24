@@ -52,6 +52,14 @@ export class User extends IdEntity {
     async passwordMatches(password: string) {
         return !this.password || (await import('password-hash')).verify(password, this.password);
     }
+    @BackendMethod({ allowed: Roles.admin })
+    static async resetPassword(userId: string, remult?: Remult) {
+        let u = await remult!.repo(User).findId(userId);
+        if (u) {
+            u.password = '';
+            await u._.save();
+        }
+    }
 
     @BackendMethod({ allowed: Roles.admin })
     async updatePassword(password: string) {

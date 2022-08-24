@@ -36,7 +36,7 @@ export class UsersComponent implements OnInit {
       click: async () => {
 
         if (await this.dialog.yesNoQuestion("Are you sure you want to delete the password of " + this.users.currentRow.name)) {
-          await UsersComponent.resetPassword(this.users.currentRow.id);
+          await User.resetPassword(this.users.currentRow.id);
           this.dialog.info("Password deleted");
         };
       }
@@ -46,14 +46,7 @@ export class UsersComponent implements OnInit {
       return await this.dialog.confirmDelete(h.name)
     },
   });
-  @BackendMethod({ allowed: Roles.admin })
-  static async resetPassword(userId: string, remult?: Remult) {
-    let u = await remult!.repo(User).findId(userId);
-    if (u) {
-      u.password = '';
-      await u._.save();
-    }
-  }
+
 
 
 

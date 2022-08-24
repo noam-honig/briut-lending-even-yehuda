@@ -5,5 +5,12 @@
     "password": "sha1$2bdbd46b$1$c3c17be1d154774179a457ed061259f7c667dab8",
     "createDate": "2022-05-12T12:13:54.892Z",
     "admin": true
+  },
+  {
+    "id": "2c01c41a-db10-4552-b03d-f5bdb4b8a17b",
+    "name": "בדיקה",
+    "password": "",
+    "createDate": "2022-08-24T04:38:11.545Z",
+    "admin": false
   }
 ]
