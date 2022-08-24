@@ -83,7 +83,7 @@ ${window.location.origin + '/form/' + this.id}`;
     }
 
     sendWhatsapp(message: string) {
-        let url = 'https://wa.me/' + this.phone.substr(1) + '?text=' + encodeURI(message)
+        let url = 'https://wa.me/972' + this.phone.substr(1) + '?text=' + encodeURI(message)
         if (isDesktop())
             window.open(url, '_blank');
         else
