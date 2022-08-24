@@ -30,7 +30,12 @@ export class Lending extends IdEntity {
         caption: 'טלפון',
         allowApiUpdate: Roles.admin,
         inputType: 'tel', validate: (_, f) => {
-            f.value = f.value.replace(/\D/g, '');
+            const orig = f.value;
+            f.value = orig.replace(/\D/g, '');
+            if (f.value.startsWith('972'))
+                f.value = '0' + f.value.substr(3);
+            else if (orig.trim().startsWith('+'))
+                f.value = '+' + f.value;
             if (f.value.length < 10)
                 throw Error("טלפון לא תקין")
         }
@@ -83,7 +88,10 @@ ${window.location.origin + '/form/' + this.id}`;
     }
 
     sendWhatsapp(message: string) {
-        let url = 'https://wa.me/972' + this.phone.substr(1) + '?text=' + encodeURI(message)
+        let phone = this.phone;
+        if (phone.startsWith('0'))
+            phone = '972' + phone.substr(1);
+        let url = 'https://wa.me/' + phone + '?text=' + encodeURI(message)
         if (isDesktop())
             window.open(url, '_blank');
         else
