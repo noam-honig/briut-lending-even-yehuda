@@ -1,13 +1,51 @@
-<mat-card *ngFor="let lend of lendings" style="margin:8px 0; padding:8px" [class.returned]="lend.returnDate!=null">
-    <div style="display: flex;
+<mat-card style="display:flex;
+        padding-bottom: 0;
+        align-items: center;">
+    <mat-form-field
+        style="flex-grow:1"
+        appearance="fill"
+    >
+        <mat-label>חיפוש</mat-label>
+        <input
+            matInput
+            [(ngModel)]="search"
+            placeholder="חיפוש שם/טלפון"
+        >
+    </mat-form-field>
+    <mat-checkbox
+        class="example-margin"
+        [(ngModel)]="notReturnedOnly"
+    >
+        טרם הוחזר
+    </mat-checkbox>
+</mat-card>
+<ng-container *ngFor="let lend of lendings">
+    <mat-card
+        *ngIf="include(lend)"
+        style="margin:8px 0; padding:8px"
+        [class.returned]="lend.returnDate!=null"
+    >
+        <div style="display: flex;
   justify-content: space-between;
   align-items: center;">
-        <span style="font-size:large">{{lend.firstName}} ({{lend.lastName}})<span *ngIf="!item">,
-                {{lend.item.name}}</span></span>
-        <app-dots-menu [item]="lend" [buttons]="buttons"></app-dots-menu>
-    </div>
-    <div> הושאל בתאריך: {{lend.$.lendDate.displayValue}},
-        <span *ngIf="lend.returnDate"> הוחזר בתאריך: {{lend.$.returnDate.displayValue}}</span>
-        <span *ngIf="!lend.returnDate"> תאריך החזרה מתוכנן: {{lend.$.plannedReturnDate.displayValue}}</span>
-    </div>
-</mat-card>
+            <span style="font-size:large">
+                {{lend.firstName}} ({{lend.lastName}})
+                <span *ngIf="!item">,
+                {{lend.item.name}}</span>
+            </span>
+            <app-dots-menu
+                [item]="lend"
+                [buttons]="buttons"
+            ></app-dots-menu>
+        </div>
+        <div>
+            הושאל בתאריך: {{lend.$.lendDate.displayValue}},
+            <span *ngIf="lend.returnDate">
+                הוחזר בתאריך: {{lend.$.returnDate.displayValue}}
+            </span>
+            <span *ngIf="!lend.returnDate">
+                תאריך החזרה מתוכנן: {{lend.$.plannedReturnDate.displayValue}}
+            </span>
+        </div>
+    </mat-card>
+</ng-container>

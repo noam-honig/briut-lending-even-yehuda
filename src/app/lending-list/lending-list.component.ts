@@ -11,7 +11,17 @@ import { lendingRowButtons } from '../lengdings/lendings.component';
   styleUrls: ['./lending-list.component.scss']
 })
 export class LendingListComponent implements OnInit {
-
+  include(l: Lending): any {
+    if (this.notReturnedOnly && l.returnDate !== null)
+      return false;
+    for (const item of [l.firstName, l.lastName, l.phone]) {
+      if (item.includes(this.search) )
+        return true;
+    }
+    return false;
+  }
+  search = '';
+  notReturnedOnly = '';
 
   constructor(private remult: Remult) { }
   lendings: Lending[] = [];
