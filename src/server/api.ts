@@ -37,7 +37,7 @@ const dataProvider = async () => {
                 rejectUnauthorized: false
             }
         });
-        return new SqlDatabase(new PostgresDataProvider(new PostgresSchemaWrapper(pool, 'brey')));
+        return new SqlDatabase(new PostgresDataProvider(new PostgresSchemaWrapper(pool, process.env['SCHEMA']||'brey')));
     }
     return undefined;
 }
