@@ -8,6 +8,7 @@ import * as jwt from 'express-jwt';
 import * as compression from 'compression';
 import { getJwtTokenSignKey } from '../app/users/user';
 import { api } from './api';
+import * as fs from 'fs'
 
 
 async function startup() {
@@ -29,7 +30,11 @@ async function startup() {
     app.use(express.static('dist/angular-starter-project'));
     app.use('/*', async (req, res) => {
         try {
-            res.sendFile(process.cwd() + '/dist/angular-starter-project/index.html');
+            let index = fs.readFileSync(process.cwd() + '/dist/angular-starter-project/index.html').toString();
+            if (process.env["TITLE"]) {
+                index = index.replace('בריאות אבן יהודה', process.env["TITLE"]);
+            }
+            res.send(index);
         } catch (err) {
             res.sendStatus(500);
         }
