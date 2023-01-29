@@ -37,8 +37,9 @@ export class HomeComponent implements OnInit {
       return;
     const l = this.remult.repo(Lending).create({ item });
     showLendDialog(l, this.remult, () => {
-      this.zone.run(() =>
-        l.sendFormInWhatsapp());
+      if (!window.document.title.includes("צורן"))
+        this.zone.run(() =>
+          l.sendFormInWhatsapp());
       item._.reload();
     });
   };
